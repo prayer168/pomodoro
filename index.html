@@ -26,18 +26,31 @@
       </div>
 
       <div class="timer-face" aria-live="polite">
-        <div class="progress-ring" aria-hidden="true">
-          <svg viewBox="0 0 220 220">
-            <circle class="ring-track" cx="110" cy="110" r="98"></circle>
-            <circle class="ring-value" id="ringValue" cx="110" cy="110" r="98"></circle>
-          </svg>
-          <div class="time-readout" id="timeReadout">25:00</div>
+        <div class="forest-scene" id="forestScene" aria-hidden="true">
+          <div class="sky-dot dot-one"></div>
+          <div class="sky-dot dot-two"></div>
+          <div class="plant" id="focusPlant">
+            <span class="leaf leaf-left"></span>
+            <span class="leaf leaf-right"></span>
+            <span class="crown crown-back"></span>
+            <span class="crown crown-front"></span>
+            <span class="trunk"></span>
+          </div>
+          <div class="ground">
+            <span class="sprout sprout-one"></span>
+            <span class="sprout sprout-two"></span>
+            <span class="sprout sprout-three"></span>
+          </div>
+        </div>
+        <div class="time-readout" id="timeReadout">25:00</div>
+        <div class="progress-bar" aria-hidden="true">
+          <span id="progressValue"></span>
         </div>
         <p class="phase-label" id="phaseLabel">專注時間</p>
       </div>
 
       <div class="actions" aria-label="主要操作">
-        <button class="primary-action" id="startPause" type="button">開始</button>
+        <button class="primary-action" id="startPause" type="button">種下專注樹</button>
         <button class="secondary-action" id="resetTimer" type="button">重設</button>
         <button class="secondary-action" id="skipTimer" type="button">跳過</button>
       </div>
@@ -52,9 +65,13 @@
       <section class="stats-row" aria-label="今日進度">
         <div>
           <span class="stat-number" id="todayCount">0</span>
-          <span class="stat-label">今日完成</span>
+          <span class="stat-label">今日森林</span>
         </div>
         <button class="text-button" id="clearToday" type="button">清除今日</button>
+      </section>
+
+      <section class="forest-patch" aria-label="今日種下的樹">
+        <div id="forestPatch"></div>
       </section>
 
       <section class="settings">
@@ -85,7 +102,7 @@
 
       <section class="cycle-note">
         <h2>節奏</h2>
-        <p id="cycleText">完成 4 顆番茄後，下一段休息會切到長休息。每段結束後由你手動開始下一段。</p>
+        <p id="cycleText">每完成一段專注，就在今日森林種下一棵樹。完成 4 棵後，下一段休息會切到長休息。</p>
       </section>
     </aside>
   </main>

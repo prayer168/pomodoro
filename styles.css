@@ -6,10 +6,14 @@
   --text: #202124;
   --muted: #5d6768;
   --line: #d5dddd;
-  --accent: #2f6f73;
-  --accent-strong: #24595d;
-  --accent-soft: #dcecec;
-  --rest: #8b5e2e;
+  --accent: #3f8f4f;
+  --accent-strong: #2d6f3d;
+  --accent-soft: #e1f1df;
+  --rest: #b46d36;
+  --sky: #dff3ec;
+  --earth: #b9824a;
+  --leaf: #5cab63;
+  --leaf-dark: #3d8447;
   --danger: #9d3d32;
   --shadow: 0 22px 60px rgba(36, 41, 45, 0.12);
 }
@@ -22,10 +26,14 @@ body.dark {
   --text: #f4f0e8;
   --muted: #bab2a5;
   --line: #3a3f40;
-  --accent: #72b9b4;
-  --accent-strong: #a4d6d2;
-  --accent-soft: #263c3c;
+  --accent: #81c784;
+  --accent-strong: #b9e2bb;
+  --accent-soft: #27402d;
   --rest: #d7ad74;
+  --sky: #203435;
+  --earth: #9c6a40;
+  --leaf: #77b96d;
+  --leaf-dark: #4d8f4e;
   --danger: #df8479;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
 }
@@ -144,50 +152,176 @@ h2 {
 .timer-face {
   display: grid;
   place-items: center;
-  gap: 18px;
+  gap: 14px;
   padding: 18px 0;
 }
 
-.progress-ring {
+.forest-scene {
   position: relative;
-  width: min(62vw, 360px);
+  width: min(72vw, 430px);
   max-width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1.35;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255, 214, 102, 0.95) 0 26px, transparent 27px),
+    linear-gradient(180deg, var(--sky), var(--accent-soft));
 }
 
-.progress-ring svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
+.sky-dot {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.64);
 }
 
-.ring-track,
-.ring-value {
-  fill: none;
-  stroke-width: 12;
+.dot-one {
+  width: 52px;
+  height: 18px;
+  left: 16%;
+  top: 18%;
 }
 
-.ring-track {
-  stroke: var(--panel-soft);
+.dot-two {
+  width: 34px;
+  height: 12px;
+  right: 24%;
+  top: 36%;
 }
 
-.ring-value {
-  stroke: var(--accent);
-  stroke-linecap: round;
-  stroke-dasharray: 615.75;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.35s ease, stroke 0.2s ease;
+.ground {
+  position: absolute;
+  right: -8%;
+  bottom: -11%;
+  left: -8%;
+  height: 34%;
+  border-radius: 50% 50% 0 0;
+  background:
+    radial-gradient(circle at 20% 8%, rgba(255, 255, 255, 0.22) 0 5px, transparent 6px),
+    radial-gradient(circle at 68% 16%, rgba(255, 255, 255, 0.18) 0 6px, transparent 7px),
+    linear-gradient(180deg, #8fc45d, #5d9d48);
+  box-shadow: inset 0 14px 26px rgba(255, 255, 255, 0.18);
+}
+
+.plant {
+  --growth: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  width: 170px;
+  height: 200px;
+  transform: translateX(-50%) scale(calc(0.28 + var(--growth) * 0.72));
+  transform-origin: 50% 100%;
+  transition: transform 0.35s ease;
+}
+
+.trunk {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 26px;
+  height: 96px;
+  border-radius: 16px 16px 8px 8px;
+  background: linear-gradient(90deg, #91643f, var(--earth));
+  transform: translateX(-50%);
+}
+
+.leaf,
+.crown {
+  position: absolute;
+  display: block;
+  background: var(--leaf);
+}
+
+.leaf {
+  bottom: 70px;
+  width: 54px;
+  height: 34px;
+  border-radius: 100% 0 100% 0;
+  opacity: calc(0.25 + var(--growth) * 0.75);
+}
+
+.leaf-left {
+  left: 38px;
+  transform: rotate(-28deg);
+}
+
+.leaf-right {
+  right: 38px;
+  transform: rotate(118deg);
+}
+
+.crown {
+  border-radius: 50%;
+  opacity: calc((var(--growth) - 0.28) * 1.6);
+}
+
+.crown-back {
+  left: 28px;
+  top: 26px;
+  width: 114px;
+  height: 104px;
+  background: var(--leaf-dark);
+}
+
+.crown-front {
+  left: 48px;
+  top: 4px;
+  width: 92px;
+  height: 104px;
+  background: var(--leaf);
+  box-shadow:
+    -44px 34px 0 -10px var(--leaf),
+    46px 38px 0 -12px var(--leaf-dark);
+}
+
+.sprout {
+  position: absolute;
+  bottom: 72%;
+  width: 18px;
+  height: 28px;
+  border-radius: 16px 16px 0 16px;
+  background: var(--leaf-dark);
+}
+
+.sprout-one {
+  left: 18%;
+  transform: rotate(-28deg);
+}
+
+.sprout-two {
+  left: 74%;
+  transform: rotate(24deg);
+}
+
+.sprout-three {
+  left: 83%;
+  bottom: 58%;
+  transform: rotate(-18deg) scale(0.72);
 }
 
 .time-readout {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
   font-size: clamp(3.8rem, 10vw, 6.5rem);
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   line-height: 1;
+}
+
+.progress-bar {
+  width: min(72vw, 430px);
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--panel-soft);
+}
+
+.progress-bar span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #8fbd4f);
+  transition: width 0.35s ease;
 }
 
 .phase-label {
@@ -278,6 +412,50 @@ input[type="number"] {
   padding: 18px 0;
 }
 
+.forest-patch {
+  min-height: 74px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 18px;
+}
+
+#forestPatch {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.mini-tree {
+  position: relative;
+  min-height: 40px;
+}
+
+.mini-tree::before,
+.mini-tree::after {
+  position: absolute;
+  content: "";
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mini-tree::before {
+  bottom: 9px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50% 50% 46% 46%;
+  background: var(--leaf);
+  box-shadow:
+    -10px 8px 0 -4px var(--leaf-dark),
+    10px 9px 0 -5px var(--leaf-dark);
+}
+
+.mini-tree::after {
+  bottom: 0;
+  width: 8px;
+  height: 16px;
+  border-radius: 6px 6px 2px 2px;
+  background: var(--earth);
+}
+
 .stat-number {
   display: block;
   font-size: 2.4rem;
@@ -324,8 +502,20 @@ input[type="number"] {
   line-height: 1.6;
 }
 
-body.rest-mode .ring-value {
-  stroke: var(--rest);
+body.rest-mode .progress-bar span {
+  background: linear-gradient(90deg, var(--rest), #d9a74e);
+}
+
+body.rest-mode .forest-scene {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255, 214, 102, 0.85) 0 26px, transparent 27px),
+    linear-gradient(180deg, #f2eadc, #e7dac4);
+}
+
+body.dark.rest-mode .forest-scene {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(215, 173, 116, 0.75) 0 26px, transparent 27px),
+    linear-gradient(180deg, #2f2d2a, #242624);
 }
 
 @media (max-width: 860px) {
@@ -354,7 +544,8 @@ body.rest-mode .ring-value {
     grid-template-columns: 1fr;
   }
 
-  .progress-ring {
+  .forest-scene,
+  .progress-bar {
     width: min(78vw, 300px);
   }
 

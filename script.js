@@ -6,13 +6,14 @@ const MODES = {
 
 const STORAGE_KEY = "work-pomodoro-state-v1";
 const TODAY_KEY = getLocalDateKey();
-const RING_LENGTH = 615.75;
 
 const elements = {
   body: document.body,
   timeReadout: document.querySelector("#timeReadout"),
   phaseLabel: document.querySelector("#phaseLabel"),
-  ringValue: document.querySelector("#ringValue"),
+  progressValue: document.querySelector("#progressValue"),
+  focusPlant: document.querySelector("#focusPlant"),
+  forestPatch: document.querySelector("#forestPatch"),
   startPause: document.querySelector("#startPause"),
   resetTimer: document.querySelector("#resetTimer"),
   skipTimer: document.querySelector("#skipTimer"),
@@ -89,11 +90,13 @@ function render() {
   const duration = getModeSeconds();
   const elapsed = duration - state.remainingSeconds;
   const progress = duration > 0 ? Math.min(Math.max(elapsed / duration, 0), 1) : 0;
+  const plantGrowth = state.mode === "focus" ? progress : 1;
   elements.timeReadout.textContent = formatTime(state.remainingSeconds);
   elements.phaseLabel.textContent = MODES[state.mode].label;
-  elements.startPause.textContent = state.isRunning ? "暫停" : "開始";
+  elements.startPause.textContent = state.isRunning ? "守著這棵樹" : state.mode === "focus" ? "種下專注樹" : "開始休息";
   elements.todayCount.textContent = state.todayCount;
-  elements.ringValue.style.strokeDashoffset = `${RING_LENGTH * progress}`;
+  elements.progressValue.style.width = `${Math.round(progress * 100)}%`;
+  elements.focusPlant.style.setProperty("--growth", plantGrowth.toFixed(2));
   elements.body.classList.toggle("rest-mode", state.mode !== "focus");
   elements.body.classList.toggle("dark", state.theme === "dark");
 
@@ -101,7 +104,20 @@ function render() {
     button.classList.toggle("active", button.dataset.mode === state.mode);
   });
 
+  renderForestPatch();
   document.title = `${formatTime(state.remainingSeconds)} | ${MODES[state.mode].label}`;
+}
+
+function renderForestPatch() {
+  const treeCount = Math.min(state.todayCount, 24);
+  elements.forestPatch.innerHTML = "";
+
+  for (let index = 0; index < treeCount; index += 1) {
+    const tree = document.createElement("span");
+    tree.className = "mini-tree";
+    tree.title = `第 ${index + 1} 棵專注樹`;
+    elements.forestPatch.appendChild(tree);
+  }
 }
 
 function switchMode(mode) {
