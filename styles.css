@@ -180,7 +180,10 @@ h2 {
 }
 
 .oak-svg {
+  --seedling: 0;
+  --leafing: 0;
   --growth: 0;
+  --flower: 0;
   --fruit: 0;
   display: block;
 }
@@ -205,6 +208,44 @@ h2 {
   fill: var(--earth);
 }
 
+.oak-svg .svg-seed {
+  fill: var(--acorn);
+}
+
+.oak-svg .svg-root,
+.oak-svg .svg-sprout-stem {
+  fill: none;
+  stroke: var(--earth);
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.oak-svg .svg-root {
+  opacity: calc(var(--seedling) * 0.7);
+  stroke-width: 3;
+}
+
+.oak-svg .svg-sprout-stem {
+  opacity: var(--seedling);
+  stroke-dasharray: 80;
+  stroke-dashoffset: calc(80 - var(--seedling) * 80);
+}
+
+.oak-svg .svg-cotyledon {
+  fill: #9fbd6b;
+  opacity: var(--seedling);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(calc(0.45 + var(--seedling) * 0.55));
+}
+
+.oak-svg .svg-young-leaf {
+  fill: var(--leaf);
+  opacity: var(--leafing);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .oak-svg .svg-trunk-line {
   fill: none;
   stroke: #75502f;
@@ -224,12 +265,59 @@ h2 {
   fill: #66934e;
 }
 
+.oak-svg .svg-branch {
+  fill: none;
+  stroke: var(--earth);
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.oak-svg .svg-seedling {
+  opacity: calc(1 - var(--growth) * 0.84);
+  transform: scale(calc(0.68 + var(--seedling) * 0.32));
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
 .oak-svg .svg-oak {
-  opacity: calc(0.72 + var(--growth) * 0.28);
+  opacity: var(--growth);
   transform: scale(calc(0.28 + var(--growth) * 0.72));
   transform-box: fill-box;
   transform-origin: center bottom;
   transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.oak-svg .svg-catkin {
+  opacity: var(--flower);
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+.oak-svg .svg-catkin-stem {
+  fill: none;
+  stroke: #b7a54b;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.oak-svg .svg-catkin-bead {
+  fill: #d9ca65;
+}
+
+.oak-svg .svg-female-flower {
+  opacity: var(--flower);
+}
+
+.oak-svg .svg-flower-base {
+  fill: #8aaa50;
+}
+
+.oak-svg .svg-flower-stigma {
+  fill: none;
+  stroke: #e6d253;
+  stroke-linecap: round;
+  stroke-width: 3;
 }
 
 .oak-svg .svg-acorn {

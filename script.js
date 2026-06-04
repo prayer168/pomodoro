@@ -118,6 +118,35 @@ function createAcorn(parent, x, y, scale) {
   });
 }
 
+function createOakLeaf(parent, x, y, scale, rotation, className = "svg-leaf") {
+  appendSvg(parent, "path", {
+    class: className,
+    transform: `translate(${x} ${y}) rotate(${rotation}) scale(${scale})`,
+    d: "M0 -38 C12 -32 15 -21 10 -12 C23 -10 26 4 14 11 C22 22 9 34 -2 27 C-9 38 -24 28 -18 15 C-32 15 -34 -2 -20 -8 C-31 -18 -17 -32 -8 -22 C-7 -30 -4 -35 0 -38Z"
+  });
+}
+
+function createCatkin(parent, x, y, length, rotation) {
+  const catkin = appendSvg(parent, "g", {
+    class: "svg-catkin",
+    transform: `translate(${x} ${y}) rotate(${rotation})`
+  });
+  appendSvg(catkin, "path", {
+    class: "svg-catkin-stem",
+    d: `M0 0 C-5 ${length * 0.26} 5 ${length * 0.58} 0 ${length}`
+  });
+
+  for (let index = 0; index < 7; index += 1) {
+    const cy = 8 + index * (length / 8);
+    appendSvg(catkin, "circle", {
+      class: "svg-catkin-bead",
+      cx: index % 2 === 0 ? "-5" : "5",
+      cy,
+      r: "4"
+    });
+  }
+}
+
 function buildOakSvg() {
   const svg = svgElement("svg", {
     class: "oak-svg",
@@ -132,6 +161,30 @@ function buildOakSvg() {
   appendSvg(svg, "ellipse", { class: "svg-cloud", cx: "280", cy: "118", rx: "24", ry: "9" });
   appendSvg(svg, "ellipse", { class: "svg-ground", cx: "215", cy: "300", rx: "255", ry: "74" });
 
+  const seedling = appendSvg(svg, "g", { class: "svg-seedling" });
+  appendSvg(seedling, "path", {
+    class: "svg-seed",
+    d: "M188 258 C169 253 159 237 166 224 C174 209 199 212 208 229 C216 244 207 259 188 258Z"
+  });
+  appendSvg(seedling, "path", {
+    class: "svg-root",
+    d: "M203 237 C210 251 221 261 237 267 M207 244 C202 256 193 265 181 271"
+  });
+  appendSvg(seedling, "path", {
+    class: "svg-sprout-stem",
+    d: "M206 238 C204 215 209 196 224 179"
+  });
+  appendSvg(seedling, "ellipse", {
+    class: "svg-cotyledon",
+    cx: "206",
+    cy: "222",
+    rx: "25",
+    ry: "12",
+    transform: "rotate(-22 206 222)"
+  });
+  createOakLeaf(seedling, 228, 180, 0.55, 22, "svg-young-leaf");
+  createOakLeaf(seedling, 207, 195, 0.44, -48, "svg-young-leaf");
+
   const oak = appendSvg(svg, "g", { class: "svg-oak" });
   appendSvg(oak, "path", {
     class: "svg-trunk",
@@ -141,10 +194,24 @@ function buildOakSvg() {
     class: "svg-trunk-line",
     d: "M214 238 C214 202 217 174 224 150"
   });
-  appendSvg(oak, "ellipse", { class: "svg-leaf-dark", cx: "178", cy: "124", rx: "78", ry: "66" });
-  appendSvg(oak, "ellipse", { class: "svg-leaf", cx: "230", cy: "102", rx: "86", ry: "78" });
-  appendSvg(oak, "ellipse", { class: "svg-leaf-hi", cx: "276", cy: "136", rx: "70", ry: "58" });
-  appendSvg(oak, "ellipse", { class: "svg-leaf", cx: "216", cy: "158", rx: "98", ry: "70" });
+  appendSvg(oak, "path", {
+    class: "svg-branch",
+    d: "M215 174 C184 158 160 138 140 110 M218 166 C247 146 273 125 292 94 M214 194 C178 190 150 179 122 154 M221 196 C255 192 289 179 312 154"
+  });
+  createOakLeaf(oak, 150, 112, 1.05, -34, "svg-leaf-dark");
+  createOakLeaf(oak, 216, 88, 1.2, 8, "svg-leaf");
+  createOakLeaf(oak, 286, 116, 1.02, 36, "svg-leaf-hi");
+  createOakLeaf(oak, 126, 160, 0.82, -62, "svg-leaf");
+  createOakLeaf(oak, 316, 160, 0.82, 58, "svg-leaf-dark");
+  createOakLeaf(oak, 216, 164, 1.18, 0, "svg-leaf");
+
+  createCatkin(oak, 178, 138, 60, 8);
+  createCatkin(oak, 254, 132, 54, -10);
+  createCatkin(oak, 294, 160, 48, 14);
+  const flower = appendSvg(oak, "g", { class: "svg-female-flower", transform: "translate(226 126)" });
+  appendSvg(flower, "circle", { class: "svg-flower-base", cx: "0", cy: "0", r: "7" });
+  appendSvg(flower, "path", { class: "svg-flower-stigma", d: "M0 -5 C-8 -13 -9 -20 -5 -25 M1 -6 C2 -16 8 -20 15 -23 M-1 -5 C-1 -16 -2 -21 -8 -27" });
+
   createAcorn(oak, 174, 132, 0.7);
   createAcorn(oak, 243, 118, 0.8);
   createAcorn(oak, 222, 170, 0.72);
@@ -157,14 +224,21 @@ function render() {
   const duration = getModeSeconds();
   const elapsed = duration - state.remainingSeconds;
   const progress = duration > 0 ? Math.min(Math.max(elapsed / duration, 0), 1) : 0;
-  const plantGrowth = state.mode === "focus" ? progress : 1;
-  const fruitGrowth = state.mode === "focus" ? Math.min(Math.max((progress - 0.85) / 0.15, 0), 1) : 1;
+  const timeline = state.mode === "focus" ? progress : 1;
+  const seedlingGrowth = Math.min(timeline / 0.28, 1);
+  const leafGrowth = Math.min(Math.max((timeline - 0.16) / 0.24, 0), 1);
+  const treeGrowth = Math.min(Math.max((timeline - 0.34) / 0.32, 0), 1);
+  const flowerGrowth = Math.min(Math.max((timeline - 0.62) / 0.18, 0), 1);
+  const fruitGrowth = Math.min(Math.max((timeline - 0.84) / 0.16, 0), 1);
   elements.timeReadout.textContent = formatTime(state.remainingSeconds);
   elements.phaseLabel.textContent = MODES[state.mode].label;
   elements.startPause.textContent = state.isRunning ? "守著橡樹" : state.mode === "focus" ? "種下專注橡樹" : "開始休息";
   elements.todayCount.textContent = state.todayCount;
   elements.progressValue.style.width = `${Math.round(progress * 100)}%`;
-  elements.oakSvg.style.setProperty("--growth", plantGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--seedling", seedlingGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--leafing", leafGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--growth", treeGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--flower", flowerGrowth.toFixed(2));
   elements.oakSvg.style.setProperty("--fruit", fruitGrowth.toFixed(2));
   elements.body.classList.toggle("rest-mode", state.mode !== "focus");
   elements.body.classList.toggle("dark", state.theme === "dark");
