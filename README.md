@@ -10,8 +10,14 @@
 - 目前專注任務
 - 今日完成數，本機保存
 - 每完成一段專注，就在今日森林新增一棵結出橡實的橡樹
+- Python 生成的橡樹橡實 SVG 資產
+- JavaScript 動態產生並控制頁面中的 SVG 成長動畫
 - 亮暗模式
 - 結束提示音與瀏覽器通知選項
+
+## SVG
+
+`tools/generate_oak_acorn_svg.py` 會產生 `assets/oak-acorn.svg`。頁面中實際運作的動畫由 `script.js` 使用 SVG DOM 產生，並依番茄鐘進度控制橡樹成長與橡實出現。
 
 ## 使用
 

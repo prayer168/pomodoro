@@ -12,7 +12,8 @@ const elements = {
   timeReadout: document.querySelector("#timeReadout"),
   phaseLabel: document.querySelector("#phaseLabel"),
   progressValue: document.querySelector("#progressValue"),
-  focusPlant: document.querySelector("#focusPlant"),
+  oakSvgMount: document.querySelector("#oakSvgMount"),
+  oakSvg: null,
   forestPatch: document.querySelector("#forestPatch"),
   startPause: document.querySelector("#startPause"),
   resetTimer: document.querySelector("#resetTimer"),
@@ -86,6 +87,72 @@ function formatTime(totalSeconds) {
   return `${minutes}:${seconds}`;
 }
 
+function svgElement(name, attrs = {}) {
+  const node = document.createElementNS("http://www.w3.org/2000/svg", name);
+  Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+  return node;
+}
+
+function appendSvg(parent, name, attrs = {}) {
+  const node = svgElement(name, attrs);
+  parent.appendChild(node);
+  return node;
+}
+
+function createAcorn(parent, x, y, scale) {
+  const acorn = appendSvg(parent, "g", {
+    class: "svg-acorn",
+    transform: `translate(${x} ${y}) scale(${scale})`
+  });
+  appendSvg(acorn, "path", {
+    class: "svg-acorn-body",
+    d: "M0 8 C-10 10 -15 20 -12 31 C-9 43 0 50 10 42 C19 34 19 17 10 10 C7 8 4 7 0 8Z"
+  });
+  appendSvg(acorn, "path", {
+    class: "svg-acorn-cap",
+    d: "M-14 9 C-8 -2 7 -4 16 5 C11 12 -5 14 -14 9Z"
+  });
+  appendSvg(acorn, "path", {
+    class: "svg-acorn-stem",
+    d: "M4 -2 C8 -8 12 -10 17 -12"
+  });
+}
+
+function buildOakSvg() {
+  const svg = svgElement("svg", {
+    class: "oak-svg",
+    viewBox: "0 0 430 320",
+    role: "img",
+    "aria-label": "專注橡樹會隨時間長大並結出橡實"
+  });
+
+  appendSvg(svg, "rect", { class: "svg-sky", width: "430", height: "320", rx: "18" });
+  appendSvg(svg, "circle", { class: "svg-sun", cx: "342", cy: "62", r: "26" });
+  appendSvg(svg, "ellipse", { class: "svg-cloud", cx: "92", cy: "62", rx: "34", ry: "12" });
+  appendSvg(svg, "ellipse", { class: "svg-cloud", cx: "280", cy: "118", rx: "24", ry: "9" });
+  appendSvg(svg, "ellipse", { class: "svg-ground", cx: "215", cy: "300", rx: "255", ry: "74" });
+
+  const oak = appendSvg(svg, "g", { class: "svg-oak" });
+  appendSvg(oak, "path", {
+    class: "svg-trunk",
+    d: "M199 248 C199 210 203 176 212 140 C221 176 231 211 231 248Z"
+  });
+  appendSvg(oak, "path", {
+    class: "svg-trunk-line",
+    d: "M214 238 C214 202 217 174 224 150"
+  });
+  appendSvg(oak, "ellipse", { class: "svg-leaf-dark", cx: "178", cy: "124", rx: "78", ry: "66" });
+  appendSvg(oak, "ellipse", { class: "svg-leaf", cx: "230", cy: "102", rx: "86", ry: "78" });
+  appendSvg(oak, "ellipse", { class: "svg-leaf-hi", cx: "276", cy: "136", rx: "70", ry: "58" });
+  appendSvg(oak, "ellipse", { class: "svg-leaf", cx: "216", cy: "158", rx: "98", ry: "70" });
+  createAcorn(oak, 174, 132, 0.7);
+  createAcorn(oak, 243, 118, 0.8);
+  createAcorn(oak, 222, 170, 0.72);
+
+  elements.oakSvgMount.replaceChildren(svg);
+  elements.oakSvg = svg;
+}
+
 function render() {
   const duration = getModeSeconds();
   const elapsed = duration - state.remainingSeconds;
@@ -97,8 +164,8 @@ function render() {
   elements.startPause.textContent = state.isRunning ? "守著橡樹" : state.mode === "focus" ? "種下專注橡樹" : "開始休息";
   elements.todayCount.textContent = state.todayCount;
   elements.progressValue.style.width = `${Math.round(progress * 100)}%`;
-  elements.focusPlant.style.setProperty("--growth", plantGrowth.toFixed(2));
-  elements.focusPlant.style.setProperty("--fruit", fruitGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--growth", plantGrowth.toFixed(2));
+  elements.oakSvg.style.setProperty("--fruit", fruitGrowth.toFixed(2));
   elements.body.classList.toggle("rest-mode", state.mode !== "focus");
   elements.body.classList.toggle("dark", state.theme === "dark");
 
@@ -277,5 +344,6 @@ elements.soundToggle.addEventListener("change", saveState);
 elements.notifyToggle.addEventListener("change", requestNotificationPermission);
 elements.notifyToggle.addEventListener("change", saveState);
 
+buildOakSvg();
 hydrate();
 render();

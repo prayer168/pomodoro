@@ -173,179 +173,86 @@ h2 {
     linear-gradient(180deg, var(--sky), var(--accent-soft));
 }
 
-.sky-dot {
-  position: absolute;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.64);
+.oak-svg-mount,
+.oak-svg {
+  width: 100%;
+  height: 100%;
 }
 
-.dot-one {
-  width: 52px;
-  height: 18px;
-  left: 16%;
-  top: 18%;
-}
-
-.dot-two {
-  width: 34px;
-  height: 12px;
-  right: 24%;
-  top: 36%;
-}
-
-.ground {
-  position: absolute;
-  right: -8%;
-  bottom: -11%;
-  left: -8%;
-  height: 34%;
-  border-radius: 50% 50% 0 0;
-  background:
-    radial-gradient(circle at 20% 8%, rgba(255, 255, 255, 0.22) 0 5px, transparent 6px),
-    radial-gradient(circle at 68% 16%, rgba(255, 255, 255, 0.18) 0 6px, transparent 7px),
-    linear-gradient(180deg, #8fc45d, #5d9d48);
-  box-shadow: inset 0 14px 26px rgba(255, 255, 255, 0.18);
-}
-
-.plant {
+.oak-svg {
   --growth: 0;
   --fruit: 0;
-  position: absolute;
-  left: 50%;
-  bottom: 22%;
-  width: 170px;
-  height: 200px;
-  transform: translateX(-50%) scale(calc(0.28 + var(--growth) * 0.72));
-  transform-origin: 50% 100%;
-  transition: transform 0.35s ease;
-}
-
-.trunk {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 30px;
-  height: 96px;
-  border-radius: 18px 18px 8px 8px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 34%),
-    linear-gradient(90deg, #7a5233, var(--earth));
-  transform: translateX(-50%);
-}
-
-.leaf,
-.crown {
-  position: absolute;
   display: block;
-  background: var(--leaf);
 }
 
-.leaf {
-  bottom: 70px;
-  width: 54px;
-  height: 34px;
-  border-radius: 100% 0 100% 0;
-  opacity: calc(0.25 + var(--growth) * 0.75);
+.oak-svg .svg-sky {
+  fill: transparent;
 }
 
-.leaf-left {
-  left: 38px;
-  transform: rotate(-28deg);
+.oak-svg .svg-cloud {
+  fill: rgba(255, 255, 255, 0.58);
 }
 
-.leaf-right {
-  right: 38px;
-  transform: rotate(118deg);
+.oak-svg .svg-sun {
+  fill: #ffd666;
 }
 
-.crown {
-  border-radius: 48% 52% 46% 54%;
-  opacity: calc((var(--growth) - 0.28) * 1.6);
+.oak-svg .svg-ground {
+  fill: #6ca24d;
 }
 
-.crown-back {
-  left: 18px;
-  top: 30px;
-  width: 134px;
-  height: 108px;
-  background: var(--leaf-dark);
+.oak-svg .svg-trunk {
+  fill: var(--earth);
 }
 
-.crown-front {
-  left: 38px;
-  top: 2px;
-  width: 106px;
-  height: 116px;
-  background: var(--leaf);
-  box-shadow:
-    -48px 38px 0 -8px var(--leaf),
-    50px 40px 0 -10px var(--leaf-dark),
-    -8px 64px 0 -16px var(--leaf-dark),
-    28px 68px 0 -18px var(--leaf);
+.oak-svg .svg-trunk-line {
+  fill: none;
+  stroke: #75502f;
+  stroke-linecap: round;
+  stroke-width: 5;
 }
 
-.acorn {
-  position: absolute;
-  display: block;
-  width: 18px;
-  height: 24px;
-  border-radius: 45% 45% 52% 52%;
-  background: var(--acorn);
+.oak-svg .svg-leaf-dark {
+  fill: var(--leaf-dark);
+}
+
+.oak-svg .svg-leaf {
+  fill: var(--leaf);
+}
+
+.oak-svg .svg-leaf-hi {
+  fill: #66934e;
+}
+
+.oak-svg .svg-oak {
+  opacity: calc(0.72 + var(--growth) * 0.28);
+  transform: scale(calc(0.28 + var(--growth) * 0.72));
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.oak-svg .svg-acorn {
   opacity: var(--fruit);
   transform: scale(calc(0.55 + var(--fruit) * 0.45));
+  transform-box: fill-box;
+  transform-origin: center;
   transition: opacity 0.35s ease, transform 0.35s ease;
-  z-index: 2;
 }
 
-.acorn::before {
-  position: absolute;
-  top: -5px;
-  left: -2px;
-  width: 22px;
-  height: 10px;
-  border-radius: 999px 999px 6px 6px;
-  background: var(--acorn-cap);
-  content: "";
+.oak-svg .svg-acorn-body {
+  fill: var(--acorn);
 }
 
-.acorn-one {
-  left: 62px;
-  top: 78px;
+.oak-svg .svg-acorn-cap {
+  fill: var(--acorn-cap);
 }
 
-.acorn-two {
-  right: 50px;
-  top: 62px;
-}
-
-.acorn-three {
-  left: 92px;
-  top: 106px;
-}
-
-.sprout {
-  position: absolute;
-  bottom: 72%;
-  width: 18px;
-  height: 28px;
-  border-radius: 16px 16px 0 16px;
-  background: var(--leaf-dark);
-}
-
-.sprout-one {
-  left: 18%;
-  transform: rotate(-28deg);
-}
-
-.sprout-two {
-  left: 74%;
-  transform: rotate(24deg);
-}
-
-.sprout-three {
-  left: 83%;
-  bottom: 58%;
-  transform: rotate(-18deg) scale(0.72);
+.oak-svg .svg-acorn-stem {
+  fill: none;
+  stroke: var(--acorn-cap);
+  stroke-linecap: round;
+  stroke-width: 4;
 }
 
 .time-readout {
