@@ -19,6 +19,10 @@
 
 `tools/generate_oak_acorn_svg.py` 會產生 `assets/oak-acorn.svg`。頁面中實際運作的動畫由 `script.js` 使用 SVG DOM 產生，並依番茄鐘進度控制小苗、長出真葉、橡樹成形、開花與橡實成熟。
 
+## 技術文件草稿
+
+建置工具與流程記錄在 `docs/build-process.md`。
+
 ## 使用
 
 直接開啟 `index.html`，或部署後用 GitHub Pages 網址開啟。
