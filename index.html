@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工作番茄鐘</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell" aria-labelledby="app-title">
+    <section class="timer-panel" aria-label="番茄鐘">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Pomodoro</p>
+          <h1 id="app-title">工作番茄鐘</h1>
+        </div>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="切換深色模式" title="切換深色模式">
+          <span aria-hidden="true">◐</span>
+        </button>
+      </header>
+
+      <div class="mode-tabs" role="tablist" aria-label="計時模式">
+        <button class="mode-tab active" type="button" data-mode="focus">專注</button>
+        <button class="mode-tab" type="button" data-mode="short">短休息</button>
+        <button class="mode-tab" type="button" data-mode="long">長休息</button>
+      </div>
+
+      <div class="timer-face" aria-live="polite">
+        <div class="progress-ring" aria-hidden="true">
+          <svg viewBox="0 0 220 220">
+            <circle class="ring-track" cx="110" cy="110" r="98"></circle>
+            <circle class="ring-value" id="ringValue" cx="110" cy="110" r="98"></circle>
+          </svg>
+          <div class="time-readout" id="timeReadout">25:00</div>
+        </div>
+        <p class="phase-label" id="phaseLabel">專注時間</p>
+      </div>
+
+      <div class="actions" aria-label="主要操作">
+        <button class="primary-action" id="startPause" type="button">開始</button>
+        <button class="secondary-action" id="resetTimer" type="button">重設</button>
+        <button class="secondary-action" id="skipTimer" type="button">跳過</button>
+      </div>
+    </section>
+
+    <aside class="side-panel" aria-label="工作設定">
+      <section class="task-block">
+        <label for="currentTask">目前專注任務</label>
+        <textarea id="currentTask" rows="4" placeholder="寫下這一輪只要完成的一件事"></textarea>
+      </section>
+
+      <section class="stats-row" aria-label="今日進度">
+        <div>
+          <span class="stat-number" id="todayCount">0</span>
+          <span class="stat-label">今日完成</span>
+        </div>
+        <button class="text-button" id="clearToday" type="button">清除今日</button>
+      </section>
+
+      <section class="settings">
+        <h2>時間設定</h2>
+        <div class="setting-grid">
+          <label>
+            <span>專注</span>
+            <input id="focusMinutes" type="number" min="1" max="120" value="25">
+          </label>
+          <label>
+            <span>短休息</span>
+            <input id="shortMinutes" type="number" min="1" max="60" value="5">
+          </label>
+          <label>
+            <span>長休息</span>
+            <input id="longMinutes" type="number" min="1" max="90" value="15">
+          </label>
+        </div>
+        <label class="check-row">
+          <input id="soundToggle" type="checkbox" checked>
+          <span>結束時播放提示音</span>
+        </label>
+        <label class="check-row">
+          <input id="notifyToggle" type="checkbox">
+          <span>結束時顯示瀏覽器通知</span>
+        </label>
+      </section>
+
+      <section class="cycle-note">
+        <h2>節奏</h2>
+        <p id="cycleText">完成 4 顆番茄後，下一段休息會切到長休息。每段結束後由你手動開始下一段。</p>
+      </section>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
