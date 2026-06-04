@@ -91,12 +91,14 @@ function render() {
   const elapsed = duration - state.remainingSeconds;
   const progress = duration > 0 ? Math.min(Math.max(elapsed / duration, 0), 1) : 0;
   const plantGrowth = state.mode === "focus" ? progress : 1;
+  const fruitGrowth = state.mode === "focus" ? Math.min(Math.max((progress - 0.85) / 0.15, 0), 1) : 1;
   elements.timeReadout.textContent = formatTime(state.remainingSeconds);
   elements.phaseLabel.textContent = MODES[state.mode].label;
-  elements.startPause.textContent = state.isRunning ? "守著這棵樹" : state.mode === "focus" ? "種下專注樹" : "開始休息";
+  elements.startPause.textContent = state.isRunning ? "守著橡樹" : state.mode === "focus" ? "種下專注橡樹" : "開始休息";
   elements.todayCount.textContent = state.todayCount;
   elements.progressValue.style.width = `${Math.round(progress * 100)}%`;
   elements.focusPlant.style.setProperty("--growth", plantGrowth.toFixed(2));
+  elements.focusPlant.style.setProperty("--fruit", fruitGrowth.toFixed(2));
   elements.body.classList.toggle("rest-mode", state.mode !== "focus");
   elements.body.classList.toggle("dark", state.theme === "dark");
 
@@ -115,7 +117,7 @@ function renderForestPatch() {
   for (let index = 0; index < treeCount; index += 1) {
     const tree = document.createElement("span");
     tree.className = "mini-tree";
-    tree.title = `第 ${index + 1} 棵專注樹`;
+    tree.title = `第 ${index + 1} 棵專注橡樹`;
     elements.forestPatch.appendChild(tree);
   }
 }

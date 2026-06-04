@@ -12,8 +12,10 @@
   --rest: #b46d36;
   --sky: #dff3ec;
   --earth: #b9824a;
-  --leaf: #5cab63;
-  --leaf-dark: #3d8447;
+  --leaf: #527f3c;
+  --leaf-dark: #365f2b;
+  --acorn: #9b6a35;
+  --acorn-cap: #6e4729;
   --danger: #9d3d32;
   --shadow: 0 22px 60px rgba(36, 41, 45, 0.12);
 }
@@ -32,8 +34,10 @@ body.dark {
   --rest: #d7ad74;
   --sky: #203435;
   --earth: #9c6a40;
-  --leaf: #77b96d;
-  --leaf-dark: #4d8f4e;
+  --leaf: #83ad6b;
+  --leaf-dark: #5f8a50;
+  --acorn: #c79a60;
+  --acorn-cap: #8d6740;
   --danger: #df8479;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
 }
@@ -205,6 +209,7 @@ h2 {
 
 .plant {
   --growth: 0;
+  --fruit: 0;
   position: absolute;
   left: 50%;
   bottom: 22%;
@@ -219,10 +224,12 @@ h2 {
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 26px;
+  width: 30px;
   height: 96px;
-  border-radius: 16px 16px 8px 8px;
-  background: linear-gradient(90deg, #91643f, var(--earth));
+  border-radius: 18px 18px 8px 8px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(90deg, #7a5233, var(--earth));
   transform: translateX(-50%);
 }
 
@@ -252,27 +259,68 @@ h2 {
 }
 
 .crown {
-  border-radius: 50%;
+  border-radius: 48% 52% 46% 54%;
   opacity: calc((var(--growth) - 0.28) * 1.6);
 }
 
 .crown-back {
-  left: 28px;
-  top: 26px;
-  width: 114px;
-  height: 104px;
+  left: 18px;
+  top: 30px;
+  width: 134px;
+  height: 108px;
   background: var(--leaf-dark);
 }
 
 .crown-front {
-  left: 48px;
-  top: 4px;
-  width: 92px;
-  height: 104px;
+  left: 38px;
+  top: 2px;
+  width: 106px;
+  height: 116px;
   background: var(--leaf);
   box-shadow:
-    -44px 34px 0 -10px var(--leaf),
-    46px 38px 0 -12px var(--leaf-dark);
+    -48px 38px 0 -8px var(--leaf),
+    50px 40px 0 -10px var(--leaf-dark),
+    -8px 64px 0 -16px var(--leaf-dark),
+    28px 68px 0 -18px var(--leaf);
+}
+
+.acorn {
+  position: absolute;
+  display: block;
+  width: 18px;
+  height: 24px;
+  border-radius: 45% 45% 52% 52%;
+  background: var(--acorn);
+  opacity: var(--fruit);
+  transform: scale(calc(0.55 + var(--fruit) * 0.45));
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 2;
+}
+
+.acorn::before {
+  position: absolute;
+  top: -5px;
+  left: -2px;
+  width: 22px;
+  height: 10px;
+  border-radius: 999px 999px 6px 6px;
+  background: var(--acorn-cap);
+  content: "";
+}
+
+.acorn-one {
+  left: 62px;
+  top: 78px;
+}
+
+.acorn-two {
+  right: 50px;
+  top: 62px;
+}
+
+.acorn-three {
+  left: 92px;
+  top: 106px;
 }
 
 .sprout {
@@ -445,7 +493,8 @@ input[type="number"] {
   background: var(--leaf);
   box-shadow:
     -10px 8px 0 -4px var(--leaf-dark),
-    10px 9px 0 -5px var(--leaf-dark);
+    10px 9px 0 -5px var(--leaf-dark),
+    3px 16px 0 -9px var(--acorn);
 }
 
 .mini-tree::after {

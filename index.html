@@ -29,11 +29,14 @@
         <div class="forest-scene" id="forestScene" aria-hidden="true">
           <div class="sky-dot dot-one"></div>
           <div class="sky-dot dot-two"></div>
-          <div class="plant" id="focusPlant">
+          <div class="plant oak-plant" id="focusPlant">
             <span class="leaf leaf-left"></span>
             <span class="leaf leaf-right"></span>
             <span class="crown crown-back"></span>
             <span class="crown crown-front"></span>
+            <span class="acorn acorn-one"></span>
+            <span class="acorn acorn-two"></span>
+            <span class="acorn acorn-three"></span>
             <span class="trunk"></span>
           </div>
           <div class="ground">
@@ -50,7 +53,7 @@
       </div>
 
       <div class="actions" aria-label="主要操作">
-        <button class="primary-action" id="startPause" type="button">種下專注樹</button>
+        <button class="primary-action" id="startPause" type="button">種下專注橡樹</button>
         <button class="secondary-action" id="resetTimer" type="button">重設</button>
         <button class="secondary-action" id="skipTimer" type="button">跳過</button>
       </div>
@@ -70,7 +73,7 @@
         <button class="text-button" id="clearToday" type="button">清除今日</button>
       </section>
 
-      <section class="forest-patch" aria-label="今日種下的樹">
+      <section class="forest-patch" aria-label="今日種下的橡樹">
         <div id="forestPatch"></div>
       </section>
 
@@ -102,7 +105,7 @@
 
       <section class="cycle-note">
         <h2>節奏</h2>
-        <p id="cycleText">每完成一段專注，就在今日森林種下一棵樹。完成 4 棵後，下一段休息會切到長休息。</p>
+        <p id="cycleText">每完成一段專注，就在今日森林種下一棵結出橡實的橡樹。完成 4 棵後，下一段休息會切到長休息。</p>
       </section>
     </aside>
   </main>
