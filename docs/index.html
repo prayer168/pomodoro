@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>橡實鐘技術文件</title>
+  <link rel="stylesheet" href="doc-styles.css">
+</head>
+<body>
+  <div class="doc-shell">
+    <aside class="sidebar" aria-label="文件導覽">
+      <div class="brand">
+        <img src="../assets/oak-acorn.svg" alt="">
+        <div>
+          <strong>橡實鐘</strong>
+          <span>技術建置文件</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a href="#overview">總覽</a>
+        <a href="#files">檔案分工</a>
+        <a href="#tools">工具鏈</a>
+        <a href="#rag">RAG 參考</a>
+        <a href="#svg">SVG 生成</a>
+        <a href="#animation">動畫流程</a>
+        <a href="#verify">驗證</a>
+        <a href="#publish">發布</a>
+        <a href="#next">後續調整</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="hero" id="overview">
+        <div>
+          <p class="eyebrow">Interactive Web Material</p>
+          <h1>橡實鐘技術文件</h1>
+          <p class="lead">這份文件記錄橡實鐘從概念、資料參考、SVG 生成、JavaScript 動畫控制，到 GitHub Pages 發布的完整流程。它不是最後定稿，而是將來製作正式技術文件的骨架。</p>
+          <div class="hero-actions">
+            <a class="button-link primary" href="../">開啟橡實鐘</a>
+            <a class="button-link" href="build-process.md">查看 Markdown 草稿</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="../assets/oak-acorn.svg" alt="橡樹從小苗長成並結出橡實的 SVG 動畫">
+        </figure>
+      </section>
+
+      <section class="section">
+        <h2>設計目標</h2>
+        <p>橡實鐘是一個工作用番茄鐘。視覺概念從「專注時種樹」延伸為橡樹生命週期：小苗萌發、長出真葉、橡樹成形、開花，最後結成橡實。整體圖像維持原創，不複製 Forest 的商標、圖像或 App 版面。</p>
+        <div class="timeline">
+          <div class="stage">
+            <div class="stage-time">0%-28%</div>
+            <div><h3>小苗萌發</h3><p>從橡實旁出現根、莖與子葉，讓使用者看到專注開始時的「種下」感。</p></div>
+          </div>
+          <div class="stage">
+            <div class="stage-time">16%-40%</div>
+            <div><h3>長出真葉</h3><p>加入裂片狀年輕橡樹葉，避免看起來像一般圓葉植物。</p></div>
+          </div>
+          <div class="stage">
+            <div class="stage-time">34%-66%</div>
+            <div><h3>橡樹成形</h3><p>樹幹、枝條與厚實樹冠逐步出現，讓專注進度變成可視化生長。</p></div>
+          </div>
+          <div class="stage">
+            <div class="stage-time">62%-80%</div>
+            <div><h3>開花</h3><p>下垂的雄花序 catkins 與小型雌花出現，銜接從開花到結果的植物流程。</p></div>
+          </div>
+          <div class="stage">
+            <div class="stage-time">84%-100%</div>
+            <div><h3>結果</h3><p>橢圓橡實、杯狀帽 cupule 與短柄逐漸顯示，作為一輪專注完成的收束。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="files">
+        <h2>檔案分工</h2>
+        <div class="file-list">
+          <div class="file-item"><code>index.html</code><span>番茄鐘頁面結構、標題、控制區與 SVG 掛載點。</span></div>
+          <div class="file-item"><code>styles.css</code><span>版面、色彩、RWD、SVG 階段動畫樣式。</span></div>
+          <div class="file-item"><code>script.js</code><span>番茄鐘狀態、localStorage、提醒、SVG DOM 生成與動畫進度控制。</span></div>
+          <div class="file-item"><code>tools/generate_oak_acorn_svg.py</code><span>用 Python 產生可獨立檢視的 SVG 資產。</span></div>
+          <div class="file-item"><code>assets/oak-acorn.svg</code><span>Python 生成的橡樹生命週期 SVG。</span></div>
+          <div class="file-item"><code>docs/</code><span>建置流程 Markdown 草稿與網頁版技術文件。</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="tools">
+        <h2>工具鏈</h2>
+        <div class="grid">
+          <article class="card"><h3>Python</h3><p>負責產生獨立 SVG，方便版本化、重複生成與日後做教材截圖。</p></article>
+          <article class="card"><h3>JavaScript</h3><p>使用 <code>document.createElementNS()</code> 動態建立 SVG DOM，並把番茄鐘進度轉成動畫變數。</p></article>
+          <article class="card"><h3>CSS</h3><p>控制階段式透明度、縮放、線條顯示與整體視覺語彙。</p></article>
+          <article class="card"><h3>GitHub Pages</h3><p>發布靜態網站，讓手機或其他裝置能直接開啟橡實鐘與文件頁。</p></article>
+          <article class="card"><h3>GitHub CLI</h3><p>檢查 Pages build 狀態與發布流程。</p></article>
+          <article class="card"><h3>本機伺服器</h3><p>用 <code>python -m http.server</code> 在瀏覽器中驗證頁面互動。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="rag">
+        <h2>RAG 參考流程</h2>
+        <p>製作前先搜尋公開圖片與說明，萃取橡樹與橡實的形態特徵，再轉成原創 SVG 元件。這裡的重點不是照抄照片，而是把可辨識特徵抽象化。</p>
+        <div class="grid two-col">
+          <article class="card">
+            <h3>觀察重點</h3>
+            <ul>
+              <li>橡實：橢圓堅果、杯狀 cupule、短柄。</li>
+              <li>小苗：從橡實或根部附近萌發，早期有子葉。</li>
+              <li>葉形：橡樹真葉具有裂片狀輪廓。</li>
+              <li>花：雄花序下垂，雌花較小並發育成橡實。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>轉譯方式</h3>
+            <ul>
+              <li>用 path 做裂片狀葉，不用單純橢圓。</li>
+              <li>用一串 circle 與曲線 path 呈現 catkins。</li>
+              <li>用 body、cap、stem 三層組成橡實。</li>
+              <li>用 CSS 變數控制不同生命階段顯示。</li>
+            </ul>
+          </article>
+        </div>
+        <div class="source-list">
+          <a href="https://pixabay.com/photos/acorn-oak-tree-branch-fruit-nut-5571048/">Pixabay 橡實照片<span>觀察橡實本體、杯狀帽與枝條關係。</span></a>
+          <a href="https://www.pexels.com/photo/close-up-of-green-acorn-on-oak-tree-34105975/">Pexels 橡實照片<span>觀察未成熟橡實與樹上位置。</span></a>
+          <a href="https://en.wikipedia.org/wiki/Acorn">Wikipedia Acorn<span>確認 acorn、cupule 等基本形態詞彙。</span></a>
+          <a href="https://www.internationaloaksociety.org/content/acorns-size-matters-and-so-does-shape">International Oak Society<span>參考橡實大小、形狀與 cupule 差異。</span></a>
+        </div>
+      </section>
+
+      <section class="section" id="svg">
+        <h2>SVG 生成策略</h2>
+        <p>目前採用雙軌策略：Python 產生獨立 SVG 檔案，JavaScript 則在頁面中動態建立同款 SVG 結構。這讓資產可以單獨檢視，也讓實際頁面能跟番茄鐘狀態同步。</p>
+        <pre><code class="language-powershell">python .\tools\generate_oak_acorn_svg.py</code></pre>
+        <div class="grid two-col">
+          <article class="card"><h3>Python 函式</h3><p><code>tag()</code>、<code>oak_leaf()</code>、<code>catkin()</code>、<code>acorn()</code> 負責把植物部件組成 SVG。</p></article>
+          <article class="card"><h3>輸出檔案</h3><p><code>assets/oak-acorn.svg</code> 是生成結果，可直接用瀏覽器開啟，也用在本文件頁的 hero 視覺。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="animation">
+        <h2>JavaScript 動畫流程</h2>
+        <p>頁面載入後先建立 SVG，再載入 localStorage 狀態，最後 render。番茄鐘進度會被轉成五個 CSS 變數。</p>
+        <pre><code class="language-javascript">buildOakSvg();
+hydrate();
+render();</code></pre>
+        <pre><code class="language-javascript">--seedling
+--leafing
+--growth
+--flower
+--fruit</code></pre>
+        <p>這五個變數會控制小苗、葉、樹體、花與橡實的透明度、縮放與線條顯示。這個設計的好處是，JavaScript 只處理狀態與進度，視覺轉場交給 CSS。</p>
+      </section>
+
+      <section class="section" id="verify">
+        <h2>驗證流程</h2>
+        <pre><code class="language-powershell">python .\tools\generate_oak_acorn_svg.py
+python -m py_compile .\tools\generate_oak_acorn_svg.py
+node --check .\script.js</code></pre>
+        <pre><code class="language-powershell">python -m http.server 8020 --bind 127.0.0.1</code></pre>
+        <div class="card">
+          <h3>瀏覽器檢查項目</h3>
+          <ul>
+            <li><code>svg.oak-svg</code> 是否存在。</li>
+            <li><code>.svg-seedling</code> 是否存在。</li>
+            <li><code>.svg-young-leaf</code> 是否有 2 個。</li>
+            <li><code>.svg-catkin</code> 是否有 3 組。</li>
+            <li><code>.svg-female-flower</code> 是否存在。</li>
+            <li><code>.svg-acorn</code> 是否有 3 顆。</li>
+            <li>按下「種下專注橡樹」後，倒數是否前進。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="publish">
+        <h2>GitHub Pages 發布</h2>
+        <pre><code class="language-powershell">git add README.md index.html script.js styles.css assets/oak-acorn.svg tools/generate_oak_acorn_svg.py
+git commit -m "Animate oak lifecycle stages"
+git push</code></pre>
+        <pre><code class="language-powershell">gh api repos/prayer168/pomodoro/pages/builds/latest --jq '{status,error,created_at,updated_at}'
+(Invoke-WebRequest -Uri 'https://prayer168.github.io/pomodoro/' -UseBasicParsing).StatusCode</code></pre>
+        <div class="note">期望結果是 Pages build 狀態為 <code>built</code>，公開頁面 HTTP 狀態為 <code>200</code>。</div>
+      </section>
+
+      <section class="section" id="next">
+        <h2>後續調整方向</h2>
+        <div class="grid two-col">
+          <article class="card"><h3>植物真實度</h3><p>補充更多橡樹小苗、花序與橡實發育期照片，調整葉片、花與果實比例。</p></article>
+          <article class="card"><h3>結果動畫</h3><p>讓橡實從小型 cupule 慢慢長成完整橡實，而不只是淡入。</p></article>
+          <article class="card"><h3>完成回饋</h3><p>加入橡實落下、收成、今日森林新增橡實標記等效果。</p></article>
+          <article class="card"><h3>文件強化</h3><p>補上手機截圖、QA 記錄，以及「參考來源對應 SVG 元件」表格。</p></article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

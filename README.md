@@ -21,7 +21,7 @@
 
 ## 技術文件草稿
 
-建置工具與流程記錄在 `docs/build-process.md`。
+建置工具與流程記錄在 `docs/build-process.md`，網頁版在 `docs/index.html`。
 
 ## 使用
 
