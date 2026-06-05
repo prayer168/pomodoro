@@ -248,7 +248,7 @@ function render() {
   });
 
   renderForestPatch();
-  document.title = `${formatTime(state.remainingSeconds)} | ${MODES[state.mode].label}`;
+  document.title = `${formatTime(state.remainingSeconds)} | 橡實鐘`;
 }
 
 function renderForestPatch() {

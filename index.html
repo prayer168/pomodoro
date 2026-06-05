@@ -3,16 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>工作番茄鐘</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>橡實鐘</title>
+  <link rel="stylesheet" href="styles.css?v=acorn-title">
 </head>
 <body>
   <main class="app-shell" aria-labelledby="app-title">
     <section class="timer-panel" aria-label="番茄鐘">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">Pomodoro</p>
-          <h1 id="app-title">工作番茄鐘</h1>
+        <div class="brand-title">
+          <p class="eyebrow">Acorn Timer</p>
+          <div class="title-row">
+            <h1 id="app-title">橡實鐘</h1>
+            <svg class="title-acorn" viewBox="0 0 84 96" role="img" aria-label="橡實圖示">
+              <path class="title-acorn-stem" d="M48 14 C57 5 65 3 74 4"></path>
+              <path class="title-acorn-cap" d="M15 34 C22 13 59 9 72 29 C62 42 27 47 15 34Z"></path>
+              <path class="title-acorn-body" d="M19 38 C3 54 12 85 40 92 C66 87 82 57 66 38 C53 47 32 49 19 38Z"></path>
+              <path class="title-acorn-shine" d="M30 51 C25 59 25 69 31 77"></path>
+            </svg>
+          </div>
         </div>
         <button class="icon-button" id="themeToggle" type="button" aria-label="切換深色模式" title="切換深色模式">
           <span aria-hidden="true">◐</span>
@@ -94,6 +102,6 @@
     </aside>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=acorn-title"></script>
 </body>
 </html>
